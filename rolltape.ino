@@ -4,7 +4,7 @@
 #include <SPI.h>
 
 const char* ssid = "NodeMCUV3";      // Nama AP/Hotspot
-const char* password = "milleniumfalcon";    // Password AP/Hotspot
+const char* password = "1234567890";    // Password AP/Hotspot
 
 // Declaration HW Config
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
@@ -32,7 +32,7 @@ ESP8266WebServer server(80); //Initialize the server on Port 80
 char WebResponse[] = "HTTP/1.1 200 OK\nContent-Type: text/html\n\n";
 // Website GUI
 char WebPage[] =
-  "<!DOCTYPE html><html><head><meta name='viewport' content='width=device-width'><title>Pengaturan</title> <style>body{margin: auto;}.button {background-color: #285fbb; border: none; color: white; padding: 10px 10px;text-align: center; text-decoration: none; display: inline-block; font-size: 30px; margin: auto; cursor: pointer; } .content{ max-width: 500px; margin: auto; background: white; padding: 10px; } </style> </head> <body><center> <div class='content'> <marquee>   <h4>Node MCU V3 ESP8226E Dot Matrix Wireless    </h4></marquee><br><center><form action='/tulis' method='POST'><input type='button' class='button' name='b1' value='&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;' onclick='location.href=&#39;/percepat&#39;'><br><br><input type='button' class='button' name='b2' value='&nbsp;<< &nbsp;' onclick='location.href=&#39;/kiri&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' class='button' name='b3' value='OFF' onclick='location.href=&#39;/off&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' class='button' name='b4' value='&nbsp; >>&nbsp;' onclick='location.href=&#39;/kanan&#39;'><br><br> <input type='button' class='button' name='b5' value='&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;' onclick='location.href=&#39;/perlambat&#39;'><br><br><br><center><input type='button' class='button' name='b6' value='RESET' onclick='location.href=&#39;/&#39;'></center><br><br><br><center><textarea name='i1' placeholder='Silahkan isi pesan.' rows='4'></textarea></center><center><button type='submit'>kirim</button></center><br></form></div></center></body></html>";
+    "<!DOCTYPE html><html><head><meta name='viewport' content='width=device-width'><title>Pengaturan</title><style>body{margin: auto;}.button {background-color: #285fbb; border: none; color: white; padding: 10px 10px;text-align: center; text-decoration: none; display: inline-block; font-size: 30px; margin: auto; cursor: pointer; } .content{ max-width: 500px; margin: auto; background: white; padding: 10px; } </style> </head> <body><center> <div class='content'> <marquee>   <h4>Node MCU V3 ESP8226E Dot Matrix Wireless    </h4></marquee><br></center><center><form action='/tulis' method='POST'><input type='button' class='button' name='b1' value='&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;' onclick='location.href=&#39;/percepat&#39;'><br><br><input type='button' class='button' name='b2' value='&nbsp;<< &nbsp;' onclick='location.href=&#39;/kiri&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' class='button' name='b3' value='OFF' onclick='location.href=&#39;/off&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' class='button' name='b4' value='&nbsp; >>&nbsp;' onclick='location.href=&#39;/kanan&#39;'><br><br><input type='button' class='button' name='b5' value='&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;' onclick='location.href=&#39;/perlambat&#39;'><br><br><br><center><input type='button' class='button' name='b6' value='RESET' onclick='location.href=&#39;/&#39;'></center><br><br><br><center><input type='button' class='button' name='b7' value='T1' onclick='location.href=&#39;/text1&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' class='button' name='b8' value='T2' onclick='location.href=&#39;/text2&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' class='button' name='b9' value='T3' onclick='location.href=&#39;/text3&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;</center><br><br><center><input type='button' class='button' name='b10' value='T4' onclick='location.href=&#39;/text4&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' class='button' name='b11' value='T5' onclick='location.href=&#39;/text5&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' class='button' name='b12' value='T6' onclick='location.href=&#39;/text6&#39;'>&nbsp;&nbsp;&nbsp;&nbsp;</center><br><br><br><center><textarea name='i1' placeholder='Silahkan isi pesan.' rows='4'></textarea></center><center><button type='submit'>kirim</button></center><br></form></div></center></body></html>";
 
 void scrollDataSink(uint8_t dev, MD_MAX72XX::transformType_t t, uint8_t col)
 // Callback function for data that is being scrolled off the display
@@ -137,6 +137,12 @@ void setup() {
   server.on("/perlambat", handleBawah);
   server.on("/off", handleOff);
   server.on("/tulis", handleTulis);
+  server.on("/text1", handleText1);
+  server.on("/text2", handleText2);
+  server.on("/text3", handleText3);
+  server.on("/text4", handleText4);
+  server.on("/text5", handleText5);
+  server.on("/text6", handleText6);
 
 // Start the server -------------------------------------------------------
   server.begin();
@@ -160,7 +166,7 @@ void loop() {
 
 void handleRoot() {
   server.send(200, "text/html", WebPage);
-  strcpy(curMessage, "CHILI OIL MERIAMDUDUK | IG @meriamduduk | Order di TOKOPEDIA & SHOPEE |   ");
+  strcpy(curMessage, "   ");
 
 }
 
@@ -213,4 +219,46 @@ void handleTulis() {
 
   server.send(200, "text/html", WebPage);
 
+}
+void handleText1() {
+  char *direct;
+  direct = &dir;
+  *direct = 'l';
+  server.send(200, "text/html", WebPage);
+  strcpy(curMessage, " CHILI OIL MERIAMDUDUK | IG @meriamduduk | Order di TOKOPEDIA & SHOPEE |     ");
+}
+void handleText2() {
+  char *direct;
+  direct = &dir;
+  *direct = 'l';
+  server.send(200, "text/html", WebPage);
+  strcpy(curMessage, "  Text2  ");
+}
+void handleText3() {
+  char *direct;
+  direct = &dir;
+  *direct = 'l';
+  server.send(200, "text/html", WebPage);
+  strcpy(curMessage, "  Text3  ");
+}
+void handleText4() {
+  char *direct;
+  direct = &dir;
+  *direct = 'l';
+  server.send(200, "text/html", WebPage);
+  strcpy(curMessage, "  SABAR BOS.... :)  ");
+}
+void handleText5() {
+  char *direct;
+  direct = &dir;
+  *direct = 'l';
+  server.send(200, "text/html", WebPage);
+  strcpy(curMessage, "  DIRGAHAYU RI | INDONESIA TANGGUH - INDONESIA TUMBUH  ");
+}
+void handleText6() {
+  char *direct;
+  direct = &dir;
+  *direct = 'l';
+  server.send(200, "text/html", WebPage);
+  strcpy(curMessage, "  Text6  ");
 }
